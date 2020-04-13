@@ -25,7 +25,7 @@ public class ParkingSpotDAO {
             ps.setString(1, parkingType.toString());
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
-                result = rs.getInt(1);;
+                result = rs.getInt(1);
             }
             dataBaseConfig.closeResultSet(rs);
             dataBaseConfig.closePreparedStatement(ps);
@@ -54,6 +54,28 @@ public class ParkingSpotDAO {
         }finally {
             dataBaseConfig.closeConnection(con);
         }
+    }
+    
+    public int getRowsCountWithSameVehiculeNumber(String vehiculeNumber){
+    	System.out.println("VehiculeNumber = " + vehiculeNumber );
+        Connection con = null;
+        int result=0;
+        try {
+            con = dataBaseConfig.getConnection();
+            PreparedStatement ps = con.prepareStatement(DBConstants.COUNT_RECURRENT_VEHICULE);
+            ps.setString(1, vehiculeNumber);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){					
+                result = rs.getInt("count");
+            }
+            dataBaseConfig.closeResultSet(rs);
+            dataBaseConfig.closePreparedStatement(ps);
+        }catch (Exception ex){
+            logger.error("Error fetching next available slot",ex);
+        }finally {
+            dataBaseConfig.closeConnection(con);
+        }
+        return result;
     }
 
 }

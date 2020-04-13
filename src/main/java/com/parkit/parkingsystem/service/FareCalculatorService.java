@@ -1,31 +1,50 @@
 package com.parkit.parkingsystem.service;
 
 import com.parkit.parkingsystem.constants.Fare;
+import com.parkit.parkingsystem.dao.ParkingSpotDAO;
 import com.parkit.parkingsystem.model.Ticket;
 
 public class FareCalculatorService {
+	
+	private static ParkingSpotDAO parkingSpotDAO = new ParkingSpotDAO();
 
     public void calculateFare(Ticket ticket){
         if( (ticket.getOutTime() == null) || (ticket.getOutTime().before(ticket.getInTime())) ){
             throw new IllegalArgumentException("Out time provided is incorrect:"+ticket.getOutTime().toString());
         }
 
-        int inHour = ticket.getInTime().getHours();
-        int outHour = ticket.getOutTime().getHours();
-
-        //TODO: Some tests are failing here. Need to check if this logic is correct
-        int duration = outHour - inHour;
-
-        switch (ticket.getParkingSpot().getParkingType()){
-            case CAR: {
-                ticket.setPrice(duration * Fare.CAR_RATE_PER_HOUR);
-                break;
-            }
-            case BIKE: {
-                ticket.setPrice(duration * Fare.BIKE_RATE_PER_HOUR);
-                break;
-            }
-            default: throw new IllegalArgumentException("Unkown Parking Type");
+        float diff = ticket.getOutTime().getTime() - ticket.getInTime().getTime();
+        
+        float duration = diff/(1000*60*60);
+        
+        
+        if(duration > 0.5) {
+        	boolean exist = false;
+        	double price;
+        	//System.out.println("SA RENTREEEE");
+        	if(parkingSpotDAO.getRowsCountWithSameVehiculeNumber(ticket.getVehicleRegNumber()) >= 1) {   
+        		exist = true;
+        	}
+        		switch (ticket.getParkingSpot().getParkingType()){
+                case CAR: {
+                	price=duration * Fare.CAR_RATE_PER_HOUR;
+                	if(exist) price = price*0.95;
+                    ticket.setPrice(price);
+                    break;
+                }
+                case BIKE: {
+                	price=duration * Fare.BIKE_RATE_PER_HOUR;
+                	if(exist) price = price*0.95;
+                    ticket.setPrice(price);
+                    break;
+                }
+                default: throw new IllegalArgumentException("Unkown Parking Type");
+            }	 
+        }else {
+        	ticket.setPrice(0.0);
         }
+       
+        
+
     }
 }
