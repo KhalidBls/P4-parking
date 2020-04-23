@@ -6,7 +6,7 @@ import com.parkit.parkingsystem.model.Ticket;
 
 public class FareCalculatorService {
 	
-	private static ParkingSpotDAO parkingSpotDAO = new ParkingSpotDAO();
+	private  ParkingSpotDAO parkingSpotDAO = new ParkingSpotDAO();
 
     public void calculateFare(Ticket ticket){
         if( (ticket.getOutTime() == null) || (ticket.getOutTime().before(ticket.getInTime())) ){
@@ -21,7 +21,7 @@ public class FareCalculatorService {
         if(duration > 0.5) {
         	boolean exist = false;
         	double price;
-        	//System.out.println("SA RENTREEEE");
+        	//System.out.println("NOUS"+parkingSpotDAO.getRowsCountWithSameVehiculeNumber(ticket.getVehicleRegNumber()));
         	if(parkingSpotDAO.getRowsCountWithSameVehiculeNumber(ticket.getVehicleRegNumber()) >= 1) {   
         		exist = true;
         	}
@@ -42,9 +42,16 @@ public class FareCalculatorService {
             }	 
         }else {
         	ticket.setPrice(0.0);
-        }
+        } 
        
-        
-
     }
+    
+    public void setParkingDAO(ParkingSpotDAO parkingSpotDAO) {
+    	this.parkingSpotDAO = parkingSpotDAO;
+    }
+    
+    
+    
+    
+    
 }

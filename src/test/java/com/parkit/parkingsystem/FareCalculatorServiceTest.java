@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import static org.mockito.Mockito.*;
@@ -27,8 +26,7 @@ import java.util.Date;
 @ExtendWith(MockitoExtension.class)
 public class FareCalculatorServiceTest {
 		
-	/*@Mock
-	private static ParkingSpotDAO parkingSpotDAO;*/
+	
 	
     private static FareCalculatorService fareCalculatorService;
     private Ticket ticket;
@@ -44,7 +42,7 @@ public class FareCalculatorServiceTest {
     }
     
     
-    /*
+    
     @Test
     @DisplayName("Il y a une réduction de 5% pour les utilisateurs récurrents")
     public void calculateFare_WhenRecurringUsers() {
@@ -60,14 +58,17 @@ public class FareCalculatorServiceTest {
           ticket.setParkingSpot(parkingSpot);
           ticket.setVehicleRegNumber("ABCDEF");
           
+          
+          
       	  when(parkingDAO.getRowsCountWithSameVehiculeNumber(ticket.getVehicleRegNumber())).thenReturn(1); 
           
+      	  fareCalculatorService.setParkingDAO(parkingDAO);
+      	  
           fareCalculatorService.calculateFare(ticket);
           
           verify(parkingDAO).getRowsCountWithSameVehiculeNumber(ticket.getVehicleRegNumber());
           assertThat(ticket.getPrice()).isEqualTo(Fare.CAR_RATE_PER_HOUR*0.95);
-    }*/
-        
+    } 
 
     @Test
     public void calculateFareCar(){
@@ -92,7 +93,7 @@ public class FareCalculatorServiceTest {
 
         ticket.setInTime(inTime);
         ticket.setOutTime(outTime);
-        ticket.setParkingSpot(parkingSpot);
+        ticket.setParkingSpot(parkingSpot); 
         fareCalculatorService.calculateFare(ticket);
         assertEquals(ticket.getPrice(), Fare.BIKE_RATE_PER_HOUR);
     }

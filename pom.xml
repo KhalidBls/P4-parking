@@ -65,6 +65,14 @@
 			<artifactId>maven-assembly-plugin</artifactId>
 			<version>3.0.0</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->
+		<dependency>
+		    <groupId>org.assertj</groupId>
+		    <artifactId>assertj-core</artifactId>
+		    <version>3.15.0</version>
+		    <scope>test</scope>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
@@ -153,8 +161,8 @@
 <configuration>
 <reportPlugins>
 <plugin>
-<groupId>org.codehaus.mojo</groupId>
-<artifactId>findbugs-maven-plugin</artifactId>
+	<groupId>org.codehaus.mojo</groupId>
+	<artifactId>findbugs-maven-plugin</artifactId>
 </plugin>
 </reportPlugins>
 </configuration>

@@ -27,11 +27,11 @@ public class ParkingService {
         this.ticketDAO = ticketDAO;
     }
 
-    public void processIncomingVehicle() {
+    public void processIncomingVehicule() {
         try{
             ParkingSpot parkingSpot = getNextParkingNumberIfAvailable();
             if(parkingSpot !=null && parkingSpot.getId() > 0){
-                String vehicleRegNumber = getVehichleRegNumber();
+                String vehicleRegNumber = getVehiculeRegNumber();
                 parkingSpot.setAvailable(false);
                 parkingSpotDAO.updateParking(parkingSpot);//allot this parking space and mark it's availability as false
 
@@ -53,10 +53,13 @@ public class ParkingService {
             logger.error("Unable to process incoming vehicle",e);
         }
     }
+    
 
-    private String getVehichleRegNumber() throws Exception {
+    
+
+    private String getVehiculeRegNumber() throws Exception {
         System.out.println("Please type the vehicle registration number and press enter key");
-        return inputReaderUtil.readVehicleRegistrationNumber();
+        return inputReaderUtil.readVehiculeRegistrationNumber();
     }
 
     public ParkingSpot getNextParkingNumberIfAvailable(){
@@ -99,7 +102,7 @@ public class ParkingService {
 
     public void processExitingVehicle() {
         try{
-            String vehicleRegNumber = getVehichleRegNumber();
+            String vehicleRegNumber = getVehiculeRegNumber();
             Ticket ticket = ticketDAO.getTicket(vehicleRegNumber);
             Date outTime = new Date();
             ticket.setOutTime(outTime);
