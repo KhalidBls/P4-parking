@@ -3,17 +3,27 @@ package com.parkit.parkingsystem.config;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.parkit.parkingsystem.constants.DBConstants;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.*;
+import java.util.Properties;
 
 public class DataBaseConfig {
 
     private static final Logger logger = LogManager.getLogger("DataBaseConfig");
+    
 
     public Connection getConnection() throws ClassNotFoundException, SQLException {
         logger.info("Create DB connection");
         Class.forName("com.mysql.cj.jdbc.Driver");
-        return DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/prod?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","rootroot");
+        return DriverManager.getConnection(dataBaseProperties().getProperty("db.url"),
+        		dataBaseProperties().getProperty("db.user"),
+        		dataBaseProperties().getProperty("db.password"));
     }
 
     public void closeConnection(Connection con){
@@ -48,4 +58,18 @@ public class DataBaseConfig {
             }
         }
     }
+    
+    private Properties dataBaseProperties() {
+		Properties prop = new Properties();
+		try (InputStream input = new FileInputStream("./config.properties")) {
+
+			prop.load(input);
+		} catch (IOException io) {
+			logger.error("Failed to store data base properties", io);
+		}
+		return prop;
+	}
+
+    
+    
 }
