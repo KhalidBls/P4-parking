@@ -94,6 +94,7 @@ public class ParkingService {
                 return ParkingType.BIKE;
             }
             default: {
+            	
                 System.out.println("Incorrect input provided");
                 throw new IllegalArgumentException("Entered input is invalid");
             }

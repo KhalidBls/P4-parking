@@ -69,6 +69,8 @@ public class FareCalculatorServiceTest {
           verify(parkingDAO).getRowsCountWithSameVehiculeNumber(ticket.getVehicleRegNumber());
           assertThat(ticket.getPrice()).isEqualTo(Fare.CAR_RATE_PER_HOUR*0.95);
     } 
+    
+
 
     @Test
     public void calculateFareCar(){

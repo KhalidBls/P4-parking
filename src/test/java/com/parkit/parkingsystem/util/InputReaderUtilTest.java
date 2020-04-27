@@ -47,15 +47,14 @@ public class InputReaderUtilTest {
 		assertThat(inputReaderUtil.readVehiculeRegistrationNumber()).isEqualTo("ABCDEF");
 	}
 	
-	@Test
+	@Test    //
 	public void readVehiculeRegistrationNumberWithBadVehiculeRegNumber() throws Exception {
 		ByteArrayInputStream bis = new ByteArrayInputStream("\n".getBytes());
 		Scanner scan = new Scanner(bis);
 		inputReaderUtil.setScan(scan);
 		
 		 assertThrows(IllegalArgumentException.class , () -> inputReaderUtil.readVehiculeRegistrationNumber(),"Invalid input provided" );
-
-		    
+    
 	}
 	
 }

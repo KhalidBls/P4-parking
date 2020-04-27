@@ -83,30 +83,11 @@ public class ParkingDataBaseIT {
         
         
         assertThat(ticketDAO.getTicket(regNumber).getPrice()).isGreaterThanOrEqualTo(0.0);
-        assertNotNull(ticketDAO.getTicket(regNumber).getOutTime());
-        
+        assertNotNull(ticketDAO.getTicket(regNumber).getOutTime());      
     }
     
     
-    //A REVOIR 
-    @Test
-    public void testUpdateticket() throws Exception {
-    	testParkingACar();
-    	Ticket newTicket = new Ticket();
-    	
-    	Date inTime = new Date();
-        inTime.setTime( System.currentTimeMillis() - (  60 * 60 * 1000) );
-        Date outTime = new Date();
-        ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR,false);
-    	
-    	newTicket.setInTime(inTime);
-        newTicket.setOutTime(outTime);
-        newTicket.setParkingSpot(parkingSpot);
-        newTicket.setVehicleRegNumber("NEWREG");
-        
-        
-        assertThat(ticketDAO.updateTicket(newTicket)).isEqualTo(true);
-    	
-    }
+   
+  
 
 }

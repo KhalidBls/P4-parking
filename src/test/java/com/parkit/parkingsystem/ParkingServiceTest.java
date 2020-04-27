@@ -16,6 +16,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Date;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
@@ -34,7 +36,7 @@ public class ParkingServiceTest {
     @BeforeEach
     private void setUpPerTest() {
         try {
-            when(inputReaderUtil.readVehiculeRegistrationNumber()).thenReturn("ABCDEF");
+            lenient().when(inputReaderUtil.readVehiculeRegistrationNumber()).thenReturn("ABCDEF");
             
             
             
@@ -48,7 +50,7 @@ public class ParkingServiceTest {
             lenient().when(ticketDAO.updateTicket(any(Ticket.class))).thenReturn(true);
            
             
-            when(parkingSpotDAO.updateParking(any(ParkingSpot.class))).thenReturn(true);
+            lenient().when(parkingSpotDAO.updateParking(any(ParkingSpot.class))).thenReturn(true);
 
             parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
         } catch (Exception e) {
@@ -66,18 +68,46 @@ public class ParkingServiceTest {
     }
     
     @Test
-    public void processIncomingVehicleTest(){
+    public void processIncomingVehicleTestWhenAvailable(){
     	
     	 when(inputReaderUtil.readSelection()).thenReturn(1);
-    	 when(parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR)).thenReturn(5);
+    	when(parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR)).thenReturn(5);
     	 when(ticketDAO.saveTicket(any(Ticket.class))).thenReturn(true);
+    	 
     	 parkingService.processIncomingVehicule();
-    	 
-    	 
+    	  
     	
-        verify(parkingSpotDAO).updateParking(any(ParkingSpot.class));
+        verify(parkingSpotDAO, Mockito.times(1)).updateParking(any(ParkingSpot.class));
     }
 
+    @Test
+    public void getNextParkingNumberWhenAvailableWithGoodArgumentCar() {
+    	
+    	ParkingSpot expectedParkingSpot = new ParkingSpot(5, ParkingType.CAR, true);
+    	
+    	when(inputReaderUtil.readSelection()).thenReturn(1);
+    	when(parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR)).thenReturn(5);
+    
+    	ParkingSpot ourParkingSpot = parkingService.getNextParkingNumberIfAvailable();
+    	
+    	assertThat(expectedParkingSpot).isEqualTo(ourParkingSpot);
+    }
+    
+    @Test
+    public void getNextParkingNumberWhenAvailableWithGoodArgumentBike() {
+    	
+    	ParkingSpot expectedParkingSpot = new ParkingSpot(5, ParkingType.BIKE, true);
+    	
+    	when(inputReaderUtil.readSelection()).thenReturn(2);
+    	when(parkingSpotDAO.getNextAvailableSlot(ParkingType.BIKE)).thenReturn(5);
+    
+    	ParkingSpot ourParkingSpot = parkingService.getNextParkingNumberIfAvailable();
+    	
+    	assertThat(expectedParkingSpot).isEqualTo(ourParkingSpot);
+    }
+    
+   
+    
     
     
     

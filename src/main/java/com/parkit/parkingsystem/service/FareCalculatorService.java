@@ -21,7 +21,6 @@ public class FareCalculatorService {
         if(duration > 0.5) {
         	boolean exist = false;
         	double price;
-        	//System.out.println("NOUS"+parkingSpotDAO.getRowsCountWithSameVehiculeNumber(ticket.getVehicleRegNumber()));
         	if(parkingSpotDAO.getRowsCountWithSameVehiculeNumber(ticket.getVehicleRegNumber()) >= 1) {   
         		exist = true;
         	}
