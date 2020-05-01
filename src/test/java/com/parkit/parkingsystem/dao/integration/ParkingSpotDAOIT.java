@@ -31,7 +31,7 @@ public class ParkingSpotDAOIT {
 	}
 	
 	@Test
-	public void updateParkingTest() {
+	public void updateParkingTestWithGoodValueOfParkingSpotShouldReturnTrue() {
 		
 		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR,true);
 		
@@ -41,6 +41,19 @@ public class ParkingSpotDAOIT {
 		
 		
 		assertThat(parkingDAO.updateParking(parkingSpot)).isEqualTo(true);
+	}
+	
+	@Test
+	public void updateParkingTestWithNullValueOfParkingSpotShouldReturnFalse() {
+		
+		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR,true);
+		
+		ticket.setParkingSpot(parkingSpot);
+		ticketDAO.saveTicket(ticket);
+		
+		
+		
+		assertThat(parkingDAO.updateParking(null)).isEqualTo(false);
 	}
 	
 	

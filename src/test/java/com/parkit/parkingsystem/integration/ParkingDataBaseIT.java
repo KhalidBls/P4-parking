@@ -70,7 +70,7 @@ public class ParkingDataBaseIT {
    
     
     @Test
-    public void testParkingLotExit() throws Exception{
+    public void testParkingLotExitAndTestIfFareAndOutTimeIsRegistered() throws Exception{
         testParkingACar();
         ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
         parkingService.processExitingVehicle();

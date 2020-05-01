@@ -45,7 +45,7 @@ public class FareCalculatorServiceTest {
     
     @Test
     @DisplayName("Il y a une réduction de 5% pour les utilisateurs récurrents")
-    public void calculateFare_WhenRecurringUsers() {
+    public void calculateFareTestWhenRecurringUsersShouldReturnPriceWith5percentOfReduction() {
     	
     	ParkingSpotDAO parkingDAO = Mockito.mock(ParkingSpotDAO.class);
     	  Date inTime = new Date();
@@ -73,7 +73,7 @@ public class FareCalculatorServiceTest {
 
 
     @Test
-    public void calculateFareCar(){
+    public void calculateFareCarTestFor1Hour(){
         Date inTime = new Date();
         inTime.setTime( System.currentTimeMillis() - (  60 * 60 * 1000) );
         Date outTime = new Date();
@@ -87,7 +87,7 @@ public class FareCalculatorServiceTest {
     }
 
     @Test
-    public void calculateFareBike(){
+    public void calculateFareBikeFor1Hour(){
         Date inTime = new Date();
         inTime.setTime( System.currentTimeMillis() - (  60 * 60 * 1000) );
         Date outTime = new Date();
@@ -178,7 +178,7 @@ public class FareCalculatorServiceTest {
     
     @Test
     @DisplayName("Le prix est gratuit pour tout véhicule qui reste moins d'une demi heure")
-    public void calculateFare_WhenParkingTimeIsLessThanThirtyMinutes() {
+    public void calculateFare_WhenParkingTimeIsLessThanThirtyMinutesShouldReturn0() {
     	 //GIVEN
     	 Date inTime = new Date();
          inTime.setTime( System.currentTimeMillis() - (  30 * 60 * 1000) );
@@ -196,19 +196,7 @@ public class FareCalculatorServiceTest {
          assertEquals(0.0 , ticket.getPrice() );
     }
     
- 
-
+   
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+        
 }

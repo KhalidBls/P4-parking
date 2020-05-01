@@ -55,7 +55,7 @@ public class TicketDAOIT {
 	}
 	
 	@Test
-	public void getTicketTest() {
+	public void getTicketTestWithExistingTicket() {
 		
 		savingTicketTest();
 		Ticket ourTicket = ticketDAO.getTicket("REGNUMBER");
