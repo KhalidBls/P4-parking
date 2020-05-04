@@ -32,7 +32,7 @@ public class TicketDAOIT {
 	}
 	
 	
-	//AREVOIR
+	
 	
 	@Test
 	public   void savingTicketTest() {
