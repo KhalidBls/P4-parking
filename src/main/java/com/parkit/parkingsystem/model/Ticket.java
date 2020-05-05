@@ -52,10 +52,10 @@ public class Ticket {
     }
 
     public Date getOutTime() {
-        return  outTime;
+        return  (null == outTime) ? null : new Date(outTime.getTime());
     }
 
     public void setOutTime(Date outTime) {
-        this.outTime = outTime;
+        this.outTime = (null == outTime) ? null : new Date(outTime.getTime());
     }
 }

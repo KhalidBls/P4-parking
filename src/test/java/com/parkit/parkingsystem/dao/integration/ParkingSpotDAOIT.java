@@ -30,28 +30,10 @@ public class ParkingSpotDAOIT {
 		assertThat(ourNum).isNotEqualTo(-1);
 	}
 	
-	@Test
-	public void updateParkingTestWithGoodValueOfParkingSpotShouldReturnTrue() {
-		
-		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR,true);
-		
-		ticket.setParkingSpot(parkingSpot);
-		ticketDAO.saveTicket(ticket);
-		parkingSpot = new ParkingSpot(4, ParkingType.CAR,true);
-		
-		
-		assertThat(parkingDAO.updateParking(parkingSpot)).isEqualTo(true);
-	}
+	
 	
 	@Test
 	public void updateParkingTestWithNullValueOfParkingSpotShouldReturnFalse() {
-		
-		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR,true);
-		
-		ticket.setParkingSpot(parkingSpot);
-		ticketDAO.saveTicket(ticket);
-		
-		
 		
 		assertThat(parkingDAO.updateParking(null)).isEqualTo(false);
 	}
